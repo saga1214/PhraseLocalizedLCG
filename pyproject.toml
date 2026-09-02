@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "phrase-localized-lcg"
+version = "0.1.0"
+description = "Phrase-Localized Language-Contrastive Guidance for Zero-Shot Code-Switching TTS"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+# torch / torchaudio are intentionally NOT pinned here; install them separately
+# with the CUDA wheel index that matches your driver (see README -> Installation).
+dependencies = [
+    # OmniVoice DLM backbone, pinned to the exact commit used for every number
+    # in the paper. LCG does not patch this package: the three-branch CFG and
+    # the attention-based mask extraction live in synth/ and read attentions by
+    # calling `model.llm(..., output_attentions=True)` from the outside.
+    "omnivoice @ git+https://github.com/k2-fsa/OmniVoice@6a3f23df5b23c93210fcb756f3c229ad40eb84db",
+    "transformers>=5.3.0",
+    "accelerate",
+    "numpy",
+    "soundfile",
+    "librosa",
+    "pydub",
+    "webdataset",
+    "tensorboardX",
+    "einops",
+    "sentencepiece",
+    # Eval: ASR / MER / LA / LID
+    "openai-whisper>=20231117",
+    "jiwer==3.1.0",
+    "unidecode",
+    "zhconv",
+    "zhon",
+    # Eval: speaker similarity
+    "speechbrain>=1.0",
+    "s3prl",
+    # Utilities
+    "PyYAML",
+    "tqdm",
+    "pandas",
+    "matplotlib",
+]
+
+[project.urls]
+Paper = "https://arxiv.org/abs/2609.01016"
+Demo = "https://saga1214.github.io/PhraseLocalizedLCG/"
+Repository = "https://github.com/saga1214/PhraseLocalizedLCG"
+
+[tool.hatch.build.targets.wheel]
+packages = ["eval", "aggregate"]
+
+# The omnivoice dependency above is a direct git reference (pinned to the exact
+# commit used in the paper); hatchling requires this opt-in to accept it.
+[tool.hatch.metadata]
+allow-direct-references = true

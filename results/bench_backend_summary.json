@@ -1,0 +1,104 @@
+{
+  "model": "k2-fsa/OmniVoice",
+  "gpu": "NVIDIA B200",
+  "device": "cuda:0",
+  "dtype": "bfloat16",
+  "num_step": 32,
+  "guidance_scale": 2.0,
+  "t_shift": 0.1,
+  "seed": 42,
+  "attention_setup": "layers_set_8-12__max__a2t",
+  "paper_lambda": 7,
+  "phrase_mask_margin": 4,
+  "phrase_mask_xlang_union": true,
+  "directions": [
+    "J_to_E",
+    "K_to_E"
+  ],
+  "num_per_direction": 25,
+  "entry_offset": 25,
+  "warmup": 2,
+  "conditions": {
+    "A": {
+      "name": "A_baseline_sdpa",
+      "mode": "baseline",
+      "attn_backend": {
+        "requested": "sdpa",
+        "model_config": "eager",
+        "llm_config": "sdpa"
+      },
+      "stats": {
+        "n": 50,
+        "mean_rtf": 0.023925367679707574,
+        "median_rtf": 0.02377808043832864,
+        "mean_synth_sec": 0.8914648528397083,
+        "median_synth_sec": 0.8934016460552812,
+        "mean_audio_sec": 37.766799999999996,
+        "total_synth_sec": 44.573242641985416,
+        "total_audio_sec": 1888.34,
+        "pooled_rtf": 0.023604458223617262
+      }
+    },
+    "B": {
+      "name": "B_baseline_eager",
+      "mode": "baseline",
+      "attn_backend": {
+        "requested": "eager",
+        "model_config": "eager",
+        "llm_config": "eager"
+      },
+      "stats": {
+        "n": 50,
+        "mean_rtf": 0.03796151530901677,
+        "median_rtf": 0.0385693317572364,
+        "mean_synth_sec": 1.4317136613465846,
+        "median_synth_sec": 1.4402824169956148,
+        "mean_audio_sec": 37.7204,
+        "total_synth_sec": 71.58568306732923,
+        "total_audio_sec": 1886.02,
+        "pooled_rtf": 0.03795595119210254
+      }
+    },
+    "C": {
+      "name": "C_lcg_eager",
+      "mode": "lcg",
+      "attn_backend": {
+        "requested": "eager",
+        "model_config": "eager",
+        "llm_config": "eager"
+      },
+      "stats": {
+        "n": 50,
+        "mean_rtf": 0.0532922610617597,
+        "median_rtf": 0.053631396494932884,
+        "mean_synth_sec": 2.0069216451235117,
+        "median_synth_sec": 1.9709821240976453,
+        "mean_audio_sec": 37.694,
+        "total_synth_sec": 100.34608225617558,
+        "total_audio_sec": 1884.7,
+        "pooled_rtf": 0.05324246949444239
+      }
+    }
+  },
+  "ratios": {
+    "B_over_A": {
+      "mean_rtf": 1.5866638213135604,
+      "median_rtf": 1.6220540534073251,
+      "pooled_rtf": 1.6079992530447489,
+      "mean_synth_sec": 1.6060236775302423
+    },
+    "C_over_A": {
+      "mean_rtf": 2.2274374954312535,
+      "median_rtf": 2.255497311233027,
+      "pooled_rtf": 2.2556107405664174,
+      "mean_synth_sec": 2.251262782520906
+    },
+    "C_over_B": {
+      "mean_rtf": 1.4038496784953554,
+      "median_rtf": 1.3905192040271876,
+      "pooled_rtf": 1.4027436494733534,
+      "mean_synth_sec": 1.4017618880830687
+    }
+  },
+  "errors": []
+}

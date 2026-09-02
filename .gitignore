@@ -1,0 +1,26 @@
+# Python / IDE
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.idea/
+*.egg-info/
+
+# Pipeline outputs: the launchers write these trees at the repository root.
+synth_*/
+eval_*/
+utmos_*/
+sim_*/
+bench_backend_out*/
+*_logs/
+
+# Local experiment artifacts (paper audio, intermediate eval outputs)
+_artifacts/
+
+# Guard: third-party corpora whose terms do not permit redistribution must
+# never be committed here, in any form (manifests, audio, or derived text).
+*aihub*
+*AIHub*
+
+# Local demo development assets (never pushed)
+_demo_dev/

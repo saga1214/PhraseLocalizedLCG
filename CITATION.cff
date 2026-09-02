@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use this software or benchmark, please cite the paper below."
+title: "Phrase-Localized Language-Contrastive Guidance"
+authors:
+  - family-names: Lee
+    given-names: Che Hyun
+  - family-names: Park
+    given-names: Sangkwon
+  - family-names: Kang
+    given-names: Donghun
+  - family-names: Lee
+    given-names: Dongwook
+  - family-names: Cho
+    given-names: Youngho
+  - family-names: Kim
+    given-names: Heeseung
+  - family-names: Yoon
+    given-names: Sungroh
+repository-code: "https://github.com/saga1214/PhraseLocalizedLCG"
+url: "https://saga1214.github.io/PhraseLocalizedLCG/"
+license: Apache-2.0
+preferred-citation:
+  type: article
+  title: "Phrase-Localized Language-Contrastive Guidance: Training-Free Localized Accent Control for Code-Switching Text-to-Speech"
+  authors:
+    - family-names: Lee
+      given-names: Che Hyun
+    - family-names: Park
+      given-names: Sangkwon
+    - family-names: Kang
+      given-names: Donghun
+    - family-names: Lee
+      given-names: Dongwook
+    - family-names: Cho
+      given-names: Youngho
+    - family-names: Kim
+      given-names: Heeseung
+    - family-names: Yoon
+      given-names: Sungroh
+  year: 2026
+  journal: "arXiv preprint arXiv:2609.01016"
+  url: "https://arxiv.org/abs/2609.01016"
+  notes: "Accepted to EMNLP 2026 (Main Conference)"

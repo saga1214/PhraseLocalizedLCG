@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Audio demo for Phrase-Localized Language-Contrastive Guidance (LCG), a training-free method for localized accent control in code-switching text-to-speech. EMNLP 2026.">
+    <title>Phrase-Localized LCG for Code-Switching TTS — Demo</title>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        body { font-family: 'Noto Sans', 'Google Sans', sans-serif; }
+        .tabs li { cursor: pointer; }
+        .sentence-context {
+            background: #fafafa;
+            border-left: 3px solid #cfd8dc;
+            padding: 12px 16px;
+            font-size: 0.92em;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            margin: 10px 0 16px 0;
+            color: #455a64;
+        }
+        .sentence-context .phrase-highlight {
+            background: #fff59d;
+            font-weight: 600;
+            padding: 0 3px;
+            border-radius: 2px;
+        }
+        .system-table { table-layout: fixed; }
+        .system-table td:nth-child(1) { width: 22%; }
+        .system-table td:nth-child(2) { width: 55%; }
+        .system-table td:nth-child(3) { width: 23%; font-size: 0.85em; color: #607d8b; }
+        .system-table audio { width: 100%; }
+        .ours-row { background: #fffae7; }
+        .ours-row td:first-child { font-weight: 600; }
+        .corpus-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .corpus-stats .stat { padding: 12px 18px; }
+        .corpus-stats .stat .num { font-size: 1.8em; font-weight: 700; color: #1a73e8; }
+        .corpus-stats .stat .lbl { font-size: 0.85em; color: #607d8b; }
+    </style>
+</head>
+<body>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-2 publication-title">
+                        Phrase-Localized Language-Contrastive Guidance: <br/>
+                        Training-Free Localized Accent Control for Code-Switching Text-to-Speech
+                    </h1>
+                    <div class="is-size-5 publication-authors" style="margin-top: 18px;">
+                        <span class="author-block">Che Hyun Lee<sup>1</sup>,</span>
+                        <span class="author-block">Sangkwon Park<sup>1</sup>,</span>
+                        <span class="author-block">Donghun Kang<sup>1</sup>,</span>
+                        <span class="author-block">Dongwook Lee<sup>2</sup>,</span><br/>
+                        <span class="author-block">Youngho Cho<sup>2</sup>,</span>
+                        <span class="author-block">Heeseung Kim<sup>3</sup>,</span>
+                        <span class="author-block">Sungroh Yoon<sup>1,2,4</sup></span>
+                    </div>
+                    <div class="is-size-6 publication-affiliations" style="margin-top: 10px; color: #607d8b; line-height: 1.7;">
+                        <sup>1</sup>Department of Electrical and Computer Engineering, Seoul National University<br/>
+                        <sup>2</sup>Interdisciplinary Program in Artificial Intelligence, Seoul National University<br/>
+                        <sup>3</sup>Department of Artificial Intelligence, University of Seoul<br/>
+                        <sup>4</sup>AIIS, ASRI, INMC, and ISRC, Seoul National University
+                    </div>
+                    <p class="subtitle is-5" style="color: #b31b1b; margin-top: 16px; font-weight: 600;">
+                        EMNLP 2026 &middot; Main Conference
+                    </p>
+                    <div class="publication-links" style="margin-top: 16px;">
+                        <a href="https://arxiv.org/abs/2609.01016" class="external-link button is-normal is-rounded is-dark">
+                            <span>📄 arXiv</span>
+                        </a>
+                        <a href="#demo" class="external-link button is-normal is-rounded is-dark">
+                            <span>♪ Listen to Demos</span>
+                        </a>
+                        <a href="https://github.com/saga1214/PhraseLocalizedLCG" class="external-link button is-normal is-rounded is-dark">
+                            <span>⌨ Code</span>
+                        </a>
+                        <a href="https://github.com/saga1214/PhraseLocalizedLCG/tree/main/benchmark" class="external-link button is-normal is-rounded is-dark">
+                            <span>▤ Benchmark</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ RESOURCES BANNER ════════════ -->
+<section class="section" style="padding-top: 0.5rem; padding-bottom: 0;">
+    <div class="container is-max-desktop">
+        <div class="notification has-text-centered" style="background-color: #E8F0FE; color: #363636;">
+            <p class="is-size-6" style="font-weight: 500;">
+                Code, the 1,200-utterance synthetic code-switching benchmark, and reproduction
+                instructions are available at
+                <a href="https://github.com/saga1214/PhraseLocalizedLCG"><strong>github.com/saga1214/PhraseLocalizedLCG</strong></a>.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ HERO SAMPLE ════════════ -->
+<section class="section" style="padding-top: 1.2rem; padding-bottom: 0.6rem;">
+    <div class="container is-max-desktop">
+        <div class="card" style="border: 2px solid #1a73e8;">
+            <header class="card-header" style="background:#e8f0fe;">
+                <p class="card-header-title">⏱ Hear the difference in 10 seconds — cafe pickup call (EN→KO)</p>
+            </header>
+            <div class="card-content">
+                <div class="sentence-context">In a Korean cafe, you will hear <span class="phrase-highlight">주문하신 음료 나왔습니다</span> when your drink is ready.</div>
+                <table class="table is-fullwidth system-table">
+                    <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/cafe_ko/vanilla.wav"></audio></td><td>the phrase comes out as English-accented "Jumunhashin..."</td></tr>
+                    <tr class="ours-row"><td>Ours — LCG</td><td><audio controls preload="none" src="wavs/realworld/cafe_ko/ours.wav"></audio></td><td>the same phrase, spoken like a native Korean barista</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ TLDR ════════════ -->
+<section class="section" style="padding-top: 1rem; padding-bottom: 1.2rem;">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">What is LCG?</h2>
+        <div class="content is-medium">
+            <ol style="line-height: 1.85;">
+                <li><b>The problem.</b> When a sentence embeds a foreign phrase
+                    (<i>"This station is <mark style="background:#fff59d">홍대입구</mark>"</i>),
+                    zero-shot TTS speaks the phrase with the <em>carrier language's</em> accent —
+                    because classifier-free guidance applies one language condition to the whole utterance.</li>
+                <li><b>The idea.</b> Add a third guidance branch conditioned on the <em>phrase's own language</em>,
+                    and apply it only inside the phrase region.</li>
+                <li><b>The trick.</b> The phrase region is located by the model itself: we read its
+                    self-attention to find which audio frames align to the embedded text — no fine-tuning,
+                    no external aligner.</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Overview</h2>
+
+        <h3 class="title is-5">The challenge</h3>
+        <p class="has-text-grey">
+            Global guidance flattens the embedded phrase into the carrier accent (left);
+            LCG steers only the phrase region toward its own language (right).
+        </p>
+        <figure class="image has-text-centered" style="margin: 14px 0 6px;">
+            <img src="static/figures/cs_illustration.png" alt="Cross-lingual accent leakage and localized control"
+                 style="max-width: 100%; height: auto; display: inline-block;">
+        </figure>
+
+        <h3 class="title is-5" style="margin-top: 26px;">The method in three steps</h3>
+        <ol class="has-text-grey" style="margin-left: 1.4em; line-height: 1.8;">
+            <li><b>Probe</b> — read decoder self-attention (layers 8 &amp; 12) to find the frames aligned to the embedded phrase.</li>
+            <li><b>Refine</b> — union the masks from both language tags, then dilate for recall; the diffusion process absorbs the slack.</li>
+            <li><b>Guide</b> — add a phrase-language guidance term, gated by the mask, with its own strength λ.</li>
+        </ol>
+        <figure class="image has-text-centered" style="margin: 14px 0 6px;">
+            <img src="static/figures/method.png" alt="Method overview: attention probing, mask refinement, phrase-localized LCG"
+                 style="max-width: 100%; height: auto; display: inline-block;">
+        </figure>
+    </div>
+</section>
+
+<!-- ════════════ §2 PHRASE COMPARISON ════════════ -->
+<section class="section is-light" id="demo">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Real-World Scenarios</h2>
+        <p class="has-text-centered" style="margin-bottom: 8px;">
+            Everyday situations where a carrier sentence embeds a foreign phrase.
+            Vanilla vs. our phrase-localized LCG (λ=7), paper-final configuration.
+        </p>
+        <p class="has-text-centered" style="font-size:.85em;color:#607d8b;margin:-4px 0 14px;">
+  The last tab embeds French and German phrases in English carriers — the training-free
+  control covers all five languages of the paper.</p>
+        <div class="tabs is-centered is-boxed" id="rw-tabs"><ul><li class="is-active" data-pane="rw-pane-0"><a>Dining & service <span style="color:#90a4ae;">(5)</span></a></li><li data-pane="rw-pane-1"><a>Transit announcements <span style="color:#90a4ae;">(2)</span></a></li><li data-pane="rw-pane-2"><a>Workplace & phone <span style="color:#90a4ae;">(3)</span></a></li><li data-pane="rw-pane-3"><a>Learning, travel & culture <span style="color:#90a4ae;">(3)</span></a></li><li data-pane="rw-pane-4"><a>Beyond KO/JA 🌍 <span style="color:#90a4ae;">(6)</span></a></li></ul></div>
+<div class="rw-pane" id="rw-pane-0"><div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Cafe pickup call
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→KO</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">In a Korean cafe, you will hear <span class="phrase-highlight">주문하신 음료 나왔습니다</span> when your drink is ready.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>주문하신 음료 나왔습니다</b> — your drink is ready</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/cafe_ko/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/cafe_ko/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Restaurant service phrase
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→JA</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">Your server will say <span class="phrase-highlight">ごゆっくりお召し上がりください</span>, so please take your time.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>ごゆっくりお召し上がりください</b> — please take your time and enjoy your meal</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/meal_ja/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/meal_ja/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Restaurant menu
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→JA</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">Tonight&#x27;s special is <span class="phrase-highlight">えびと野菜の天ぷら盛り合わせ</span>, served with matcha salt.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>えびと野菜の天ぷら盛り合わせ</b> — assorted shrimp and vegetable tempura</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/food_ja2/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/food_ja2/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">After a meal
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→JA</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">At the end of a meal, you can say <span class="phrase-highlight">ごちそうさまでした</span>.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>ごちそうさまでした</b> — thank you for the meal</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/meal2_ja/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/meal2_ja/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Shop greeting
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→KO</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">As you walk in, the staff will greet you with <span class="phrase-highlight">어서 오세요, 찾으시는 거 있으세요?</span></div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>어서 오세요, 찾으시는 거 있으세요?</b> — welcome — are you looking for anything?</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/store_ko/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/store_ko/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div></div></div><div class="rw-pane" id="rw-pane-1" style="display:none;"><div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Subway announcement
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→KO</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">This station is <span class="phrase-highlight">고속터미널</span>, <span class="phrase-highlight">고속터미널</span> Station. The doors are on your left.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>고속터미널</b> — Express Bus Terminal (station name)</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/st_terminal2/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/st_terminal2/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Subway announcement
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→KO</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">This station is <span class="phrase-highlight">홍대입구</span>, <span class="phrase-highlight">홍대입구</span> Station. Please transfer here for line two.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>홍대입구</b> — Hongik University Entrance (station name)</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/st_hongdae2/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/st_hongdae2/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div></div></div><div class="rw-pane" id="rw-pane-2" style="display:none;"><div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Leaving the office
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→JA</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">When leaving the office, you can say <span class="phrase-highlight">お先に失礼します</span>.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>お先に失礼します</b> — excuse me for leaving before you</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/office_ja/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/office_ja/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Business greeting
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→JA</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">The most useful business phrase is <span class="phrase-highlight">よろしくお願いいたします</span>.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>よろしくお願いいたします</b> — I look forward to working with you</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/request_ja/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/request_ja/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Ending a work call
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→KO</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">Koreans often end a work call with <span class="phrase-highlight">확인해 보고 다시 연락드리겠습니다</span>.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>확인해 보고 다시 연락드리겠습니다</b> — I will check and get back to you</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/call_ko/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/call_ko/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div></div></div><div class="rw-pane" id="rw-pane-3" style="display:none;"><div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Language-learning content
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→KO</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">Today&#x27;s key expression is <span class="phrase-highlight">시간 내 주셔서 정말 감사합니다</span>, which you can use at the end of a meeting.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>시간 내 주셔서 정말 감사합니다</b> — thank you so much for making the time</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/demo_lang_EK/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/demo_lang_EK/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Tour guide
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→KO</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">Our next stop is <span class="phrase-highlight">조선 왕조의 정궁인 경복궁</span>, followed by a walk through <span class="phrase-highlight">북촌 한옥마을의 좁은 골목길</span>.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>조선 왕조의 정궁인 경복궁</b> — Gyeongbokgung, the main royal palace of the Joseon dynasty</div><div>» <b>북촌 한옥마을의 좁은 골목길</b> — the narrow alleys of Bukchon Hanok Village</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/demo_tour_EK/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/demo_tour_EK/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Museum exhibition
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→JA</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">The exhibition features <span class="phrase-highlight">江戸時代の浮世絵の名作</span> from the museum&#x27;s own collection.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>江戸時代の浮世絵の名作</b> — masterpieces of Edo-period ukiyo-e woodblock prints</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/demo_art_EJ/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/demo_art_EJ/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div></div></div><div class="rw-pane" id="rw-pane-4" style="display:none;"><div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Dessert course
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→FR</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">For dessert, we shared <span class="phrase-highlight">un fondant au chocolat coulant</span>, still warm from the oven.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>un fondant au chocolat coulant</b> — a molten chocolate fondant</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/fr_fondant/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/fr_fondant/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Christmas market
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→DE</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">The Christmas market smelled of <span class="phrase-highlight">frisch geröstete Maronen und Glühwein</span> everywhere.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>frisch geröstete Maronen und Glühwein</b> — freshly roasted chestnuts and mulled wine</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/de_maronen/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/de_maronen/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Dessert menu
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→FR</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">The dessert menu&#x27;s highlight is <span class="phrase-highlight">une tarte aux pommes maison</span>, served warm.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>une tarte aux pommes maison</b> — a homemade apple tart</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/enfr_menu/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/enfr_menu/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Lunch classic
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→DE</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">The lunch classic here is <span class="phrase-highlight">Bratkartoffeln mit Speck und Zwiebeln</span>, crispy at the edges.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>Bratkartoffeln mit Speck und Zwiebeln</b> — pan-fried potatoes with bacon and onions</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/de_kartoffel/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/de_kartoffel/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Cheese course
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→FR</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">The cheese course featured <span class="phrase-highlight">un plateau de fromages affinés</span> with fig jam.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>un plateau de fromages affinés</b> — a platter of aged cheeses</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/fr_fromage/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/fr_fromage/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="card" style="height:100%;">
+                <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Family recipe
+                  <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→DE</span></p></header>
+                <div class="card-content" style="padding: 12px 14px;">
+                    <div class="sentence-context" style="font-size:.88em;">Grandma&#x27;s recipe calls for <span class="phrase-highlight">hausgemachter Apfelstrudel mit Vanillesoße</span> on Sundays.</div>
+                    <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>hausgemachter Apfelstrudel mit Vanillesoße</b> — homemade apple strudel with vanilla sauce</div></div>
+                    <table class="table is-fullwidth system-table" style="margin-bottom:0;">
+                      <tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/realworld/de_strudel/vanilla.wav"></audio></td></tr>
+                      <tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/realworld/de_strudel/ours.wav"></audio></td></tr>
+                    </table>
+                </div>
+              </div>
+            </div></div></div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Benchmark Samples</h2>
+        <p class="has-text-centered" style="margin-bottom: 26px;">
+            Samples drawn directly from our released
+            <a href="https://github.com/saga1214/PhraseLocalizedLCG/tree/main/benchmark"><strong>1,200-utterance
+            synthetic code-switching benchmark</strong></a>, comparing all three systems from the paper
+            (unguided baseline, coupled Swap, and phrase-localized LCG).
+        </p>
+        <h3 class="title is-5">Isolated phrase segments</h3>
+        <p style="margin-bottom: 12px; font-size: .92em; color: #607d8b;">
+            Korean carrier sentences with embedded English phrases, drawn from the LA=1 subset:
+            all systems synthesize the correct words, so the difference you hear is
+            <em>residual accent quality</em> on the isolated segment.
+        </p>
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <div class="card" style="height:100%;">
+              <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Example 1 — “practical workshops aligned with our buying committee”
+                <span class="tag is-light" style="margin-left:8px;font-size:.72em;">KO→EN</span></p></header>
+              <div class="card-content" style="padding: 12px 14px;">
+                <div class="sentence-context" style="font-size:.86em;">지난달 우리 팀이 도입한 기업 간 영업 컨설팅사는 기대보다 훨씬 실무적이었고, 리뷰를 남길 만큼 인상이 좋았다. 첫 진단 미팅에서 a clear account-based sales playbook 으로 논의를 정리해 주니, 영업대표와 마케팅 담당자가 같은 언어로 문제를 보게 됐다. 워크숍은 <span class="phrase-highlight">practical workshops aligned with our buying committee</span> 와 실제 고객 미팅 사례를 엮어 진행돼, 강의보다 공동 설계에 가까웠다. 특히 actionable pipeline diagnostics grounded in real CRM data 가 가장 도움이 됐는데, 막연했던 리드 품질 문제와 딜 지연 원인이 숫자로 보였다. 마지막 제안서에 담긴 a lightweight operating model for cross-functional execution 과 transparent ROI assumptions for the first six months 까지 설득력 있어, 비용은 높지만 재계약은 긍정적으로 검토 중이다.</div>
+                
+                <table class="table is-fullwidth system-table" style="margin-bottom:0;"><tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex02/no_cs.wav"></audio></td></tr><tr><td>Swap λ3</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex02/swap.wav"></audio></td></tr><tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex02/ours.wav"></audio></td></tr></table>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="card" style="height:100%;">
+              <header class="card-header"><p class="card-header-title" style="font-size:.95em;">Example 2 — “lean household operations with zero emotional overhead”
+                <span class="tag is-light" style="margin-left:8px;font-size:.72em;">KO→EN</span></p></header>
+              <div class="card-content" style="padding: 12px 14px;">
+                <div class="sentence-context" style="font-size:.86em;">퇴근하고 집에 오자마자 운동복을 세탁기에 넣었는데, 오늘은 minimum viable weekday morning routine 으로 내일 입을 양말이랑 머그컵까지 미리 챙겼다. 싱크대에 컵 두 개랑 접시 하나만 남겨두기 싫어서 <span class="phrase-highlight">lean household operations with zero emotional overhead</span> 처럼 바로 치웠고, 냉장고 앞 메모에는 data driven grocery budget tracking system 의 잔액을 작게 적어놨다. 베란다 화분에 물 주는 사이 고양이는 새 택배 박스에 들어가서 weekly user research session with a very picky stakeholder 에 참여하는 표정으로 나를 봤다. 별거 아닌 집안일도 이렇게 이름을 붙이면 묘하게 게임 같고, 잠들기 전 마음이 조금 정리된다.</div>
+                
+                <table class="table is-fullwidth system-table" style="margin-bottom:0;"><tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex04/no_cs.wav"></audio></td></tr><tr><td>Swap λ3</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex04/swap.wav"></audio></td></tr><tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/phrase/K_to_E/ex04/ours.wav"></audio></td></tr></table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3 class="title is-5" style="margin-top: 26px;">Full sentences</h3>
+        <p style="margin-bottom: 12px; font-size: .92em; color: #607d8b;">
+            Complete utterances with three embedded phrases each, comparing global
+            naturalness and phrase nativeness.
+        </p>
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <div class="card" style="height:100%;">
+              <header class="card-header"><p class="card-header-title" style="font-size:.95em;">English carrier · Japanese phrases
+                <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→JA</span></p></header>
+              <div class="card-content" style="padding: 12px 14px;">
+                <div class="sentence-context" style="font-size:.86em;">After the rain, I ducked into a tiny old-school cafe by the station, and the <span class="phrase-highlight">深煎り豆をネルで落とす香り</span> made my whole jacket smell like comfort. The owner gave me a smile that said <span class="phrase-highlight">ごゆっくりお召し上がりください</span>, not fussy, just warm. I took the corner seat and watched steam blur the window, feeling a sort of <span class="phrase-highlight">雨上がりの縁側で飲むほうじ茶</span> settle into the evening. Next time, I’m bringing a book and pretending I don’t have notifications. Honestly, it beat any fancy latte art.</div>
+                <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>深煎り豆をネルで落とす香り</b> — the aroma of dark-roasted beans brewed through a flannel filter</div><div>» <b>ごゆっくりお召し上がりください</b> — please take your time and enjoy it</div><div>» <b>雨上がりの縁側で飲むほうじ茶</b> — roasted green tea sipped on a veranda after the rain</div></div>
+                <table class="table is-fullwidth system-table" style="margin-bottom:0;"><tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/fullsent/E_to_J/no_cs.wav"></audio></td></tr><tr><td>Swap λ3</td><td><audio controls preload="none" src="wavs/fullsent/E_to_J/swap.wav"></audio></td></tr><tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/fullsent/E_to_J/ours.wav"></audio></td></tr></table>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="card" style="height:100%;">
+              <header class="card-header"><p class="card-header-title" style="font-size:.95em;">English carrier · Korean phrases
+                <span class="tag is-light" style="margin-left:8px;font-size:.72em;">EN→KO</span></p></header>
+              <div class="card-content" style="padding: 12px 14px;">
+                <div class="sentence-context" style="font-size:.86em;">Han’s slim novel reads like a review of everything we keep misplacing: names, rooms, the voices of the dead. The <span class="phrase-highlight">첫눈 녹듯 사라지는 어머니의 마지막 손길</span> gives the opening its ache, while the <span class="phrase-highlight">제사상에 올린 식어 가는 흰밥 한 그릇</span> turns grief into something almost domestic. By the final chapter, even <span class="phrase-highlight">봄비에 젖은 벚꽃잎이 흩어진 골목</span> feels less symbolic than inevitable. I admired its restraint; it left me quiet, not devastated, and somehow that was worse.</div>
+                <div style="font-size:.78em;color:#607d8b;margin:4px 0 8px 2px;line-height:1.5;"><div>» <b>첫눈 녹듯 사라지는 어머니의 마지막 손길</b> — last trace of a mother’s touch fading like first snow</div><div>» <b>제사상에 올린 식어 가는 흰밥 한 그릇</b> — cooling bowl of white rice set out for the ancestors</div><div>» <b>봄비에 젖은 벚꽃잎이 흩어진 골목</b> — an alley strewn with cherry petals wet from spring rain</div></div>
+                <table class="table is-fullwidth system-table" style="margin-bottom:0;"><tr><td>Vanilla</td><td><audio controls preload="none" src="wavs/fullsent/E_to_K/no_cs.wav"></audio></td></tr><tr><td>Swap λ3</td><td><audio controls preload="none" src="wavs/fullsent/E_to_K/swap.wav"></audio></td></tr><tr class="ours-row"><td>Ours λ7</td><td><audio controls preload="none" src="wavs/fullsent/E_to_K/ours.wav"></audio></td></tr></table>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Evaluation Corpus</h2>
+        <p>
+            All audio above is synthesized from our <strong>1,200-utterance balanced synthetic
+            code-switching benchmark</strong>, generated with a large language model and
+            spanning five languages across twelve directional configurations.
+            The corpus is released with the code and documented in
+            <a href="https://github.com/saga1214/PhraseLocalizedLCG/tree/main/benchmark"><strong>benchmark/</strong></a>.
+        </p>
+        <div class="corpus-stats">
+            <div class="stat"><div class="num">1,200</div><div class="lbl">utterances</div></div>
+            <div class="stat"><div class="num">12</div><div class="lbl">directions</div></div>
+            <div class="stat"><div class="num">5</div><div class="lbl">languages (EN/FR/DE/JA/KO)</div></div>
+            <div class="stat"><div class="num">~3.6</div><div class="lbl">avg phrases/utt</div></div>
+            <div class="stat"><div class="num">18</div><div class="lbl">topical domains</div></div>
+            <div class="stat"><div class="num">6</div><div class="lbl">stylistic registers</div></div>
+        </div>
+        <p class="has-text-grey is-size-7" style="margin-top: 8px;">
+            Each utterance contains 3–5 dense, technical or literary embedded phrases
+            (~6 words, ~35 characters per phrase). The corpus is balanced by direction
+            (100 utterances per direction) to enable per-direction evaluation.
+        </p>
+    </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<section class="section" style="padding-top: 0;">
+    <div class="container is-max-desktop">
+        <h2 class="title is-4">Citation</h2>
+        <pre style="text-align: left; white-space: pre-wrap; font-size: 0.8rem;"><code>@misc{lee2026phraselocalizedlanguagecontrastiveguidancetrainingfree,
+  title         = {Phrase-Localized Language-Contrastive Guidance: Training-Free Localized Accent Control for Code-Switching Text-to-Speech},
+  author        = {Che Hyun Lee and Sangkwon Park and Donghun Kang and Dongwook Lee and Youngho Cho and Heeseung Kim and Sungroh Yoon},
+  year          = {2026},
+  eprint        = {2609.01016},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2609.01016},
+}</code></pre>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="content has-text-centered is-size-7">
+        <p>
+            All audio is synthetically generated for research purposes.
+            Reference voice prompts come from publicly licensed monolingual TTS corpora
+            (LJSpeech, Public Domain · KSS, CC&nbsp;BY-NC-SA&nbsp;4.0 · and additional
+            voice prompts under their respective open licenses).
+            No human-recorded speech beyond these reference voices is included.
+        </p>
+        <p style="margin-top: 14px; color: #9e9e9e;">
+            Accepted to EMNLP 2026 (Main Conference) &middot;
+            Paper: <a href="https://arxiv.org/abs/2609.01016">arXiv:2609.01016</a> &middot;
+            Code and benchmark: <a href="https://github.com/saga1214/PhraseLocalizedLCG">github.com/saga1214/PhraseLocalizedLCG</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+document.querySelectorAll('#rw-tabs li').forEach(function(li){
+  li.addEventListener('click', function(){
+    document.querySelectorAll('#rw-tabs li').forEach(x=>x.classList.remove('is-active'));
+    li.classList.add('is-active');
+    document.querySelectorAll('.rw-pane').forEach(p=>p.style.display='none');
+    document.getElementById(li.dataset.pane).style.display='';
+    document.querySelectorAll('.rw-pane audio').forEach(a=>a.pause());
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+{
+  "real_world": [
+    {
+      "id": "cafe_ko",
+      "group": "Dining & service",
+      "title": "Cafe pickup call",
+      "setup": "E_to_K",
+      "text": "In a Korean cafe, you will hear 주문하신 음료 나왔습니다 when your drink is ready.",
+      "phrases": [
+        "주문하신 음료 나왔습니다"
+      ],
+      "glosses": [
+        "your drink is ready"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/cafe_ko/vanilla.wav",
+        "ours": "wavs/realworld/cafe_ko/ours.wav"
+      }
+    },
+    {
+      "id": "meal_ja",
+      "group": "Dining & service",
+      "title": "Restaurant service phrase",
+      "setup": "E_to_J",
+      "text": "Your server will say ごゆっくりお召し上がりください, so please take your time.",
+      "phrases": [
+        "ごゆっくりお召し上がりください"
+      ],
+      "glosses": [
+        "please take your time and enjoy your meal"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/meal_ja/vanilla.wav",
+        "ours": "wavs/realworld/meal_ja/ours.wav"
+      }
+    },
+    {
+      "id": "food_ja2",
+      "group": "Dining & service",
+      "title": "Restaurant menu",
+      "setup": "E_to_J",
+      "text": "Tonight's special is えびと野菜の天ぷら盛り合わせ, served with matcha salt.",
+      "phrases": [
+        "えびと野菜の天ぷら盛り合わせ"
+      ],
+      "glosses": [
+        "assorted shrimp and vegetable tempura"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/food_ja2/vanilla.wav",
+        "ours": "wavs/realworld/food_ja2/ours.wav"
+      }
+    },
+    {
+      "id": "meal2_ja",
+      "group": "Dining & service",
+      "title": "After a meal",
+      "setup": "E_to_J",
+      "text": "At the end of a meal, you can say ごちそうさまでした.",
+      "phrases": [
+        "ごちそうさまでした"
+      ],
+      "glosses": [
+        "thank you for the meal"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/meal2_ja/vanilla.wav",
+        "ours": "wavs/realworld/meal2_ja/ours.wav"
+      }
+    },
+    {
+      "id": "store_ko",
+      "group": "Dining & service",
+      "title": "Shop greeting",
+      "setup": "E_to_K",
+      "text": "As you walk in, the staff will greet you with 어서 오세요, 찾으시는 거 있으세요?",
+      "phrases": [
+        "어서 오세요, 찾으시는 거 있으세요?"
+      ],
+      "glosses": [
+        "welcome — are you looking for anything?"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/store_ko/vanilla.wav",
+        "ours": "wavs/realworld/store_ko/ours.wav"
+      }
+    },
+    {
+      "id": "st_terminal2",
+      "group": "Transit announcements",
+      "title": "Subway announcement",
+      "setup": "E_to_K",
+      "text": "This station is 고속터미널, 고속터미널 Station. The doors are on your left.",
+      "phrases": [
+        "고속터미널"
+      ],
+      "glosses": [
+        "Express Bus Terminal (station name)"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/st_terminal2/vanilla.wav",
+        "ours": "wavs/realworld/st_terminal2/ours.wav"
+      }
+    },
+    {
+      "id": "st_hongdae2",
+      "group": "Transit announcements",
+      "title": "Subway announcement",
+      "setup": "E_to_K",
+      "text": "This station is 홍대입구, 홍대입구 Station. Please transfer here for line two.",
+      "phrases": [
+        "홍대입구"
+      ],
+      "glosses": [
+        "Hongik University Entrance (station name)"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/st_hongdae2/vanilla.wav",
+        "ours": "wavs/realworld/st_hongdae2/ours.wav"
+      }
+    },
+    {
+      "id": "office_ja",
+      "group": "Workplace & phone",
+      "title": "Leaving the office",
+      "setup": "E_to_J",
+      "text": "When leaving the office, you can say お先に失礼します.",
+      "phrases": [
+        "お先に失礼します"
+      ],
+      "glosses": [
+        "excuse me for leaving before you"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/office_ja/vanilla.wav",
+        "ours": "wavs/realworld/office_ja/ours.wav"
+      }
+    },
+    {
+      "id": "request_ja",
+      "group": "Workplace & phone",
+      "title": "Business greeting",
+      "setup": "E_to_J",
+      "text": "The most useful business phrase is よろしくお願いいたします.",
+      "phrases": [
+        "よろしくお願いいたします"
+      ],
+      "glosses": [
+        "I look forward to working with you"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/request_ja/vanilla.wav",
+        "ours": "wavs/realworld/request_ja/ours.wav"
+      }
+    },
+    {
+      "id": "call_ko",
+      "group": "Workplace & phone",
+      "title": "Ending a work call",
+      "setup": "E_to_K",
+      "text": "Koreans often end a work call with 확인해 보고 다시 연락드리겠습니다.",
+      "phrases": [
+        "확인해 보고 다시 연락드리겠습니다"
+      ],
+      "glosses": [
+        "I will check and get back to you"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/call_ko/vanilla.wav",
+        "ours": "wavs/realworld/call_ko/ours.wav"
+      }
+    },
+    {
+      "id": "demo_lang_EK",
+      "group": "Learning, travel & culture",
+      "title": "Language-learning content",
+      "setup": "E_to_K",
+      "text": "Today's key expression is 시간 내 주셔서 정말 감사합니다, which you can use at the end of a meeting.",
+      "phrases": [
+        "시간 내 주셔서 정말 감사합니다"
+      ],
+      "glosses": [
+        "thank you so much for making the time"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/demo_lang_EK/vanilla.wav",
+        "ours": "wavs/realworld/demo_lang_EK/ours.wav"
+      }
+    },
+    {
+      "id": "demo_tour_EK",
+      "group": "Learning, travel & culture",
+      "title": "Tour guide",
+      "setup": "E_to_K",
+      "text": "Our next stop is 조선 왕조의 정궁인 경복궁, followed by a walk through 북촌 한옥마을의 좁은 골목길.",
+      "phrases": [
+        "조선 왕조의 정궁인 경복궁",
+        "북촌 한옥마을의 좁은 골목길"
+      ],
+      "glosses": [
+        "Gyeongbokgung, the main royal palace of the Joseon dynasty",
+        "the narrow alleys of Bukchon Hanok Village"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/demo_tour_EK/vanilla.wav",
+        "ours": "wavs/realworld/demo_tour_EK/ours.wav"
+      }
+    },
+    {
+      "id": "demo_art_EJ",
+      "group": "Learning, travel & culture",
+      "title": "Museum exhibition",
+      "setup": "E_to_J",
+      "text": "The exhibition features 江戸時代の浮世絵の名作 from the museum's own collection.",
+      "phrases": [
+        "江戸時代の浮世絵の名作"
+      ],
+      "glosses": [
+        "masterpieces of Edo-period ukiyo-e woodblock prints"
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/demo_art_EJ/vanilla.wav",
+        "ours": "wavs/realworld/demo_art_EJ/ours.wav"
+      }
+    },
+    {
+      "id": "fr_fondant",
+      "group": "Beyond Korean & Japanese",
+      "title": "Dessert course",
+      "setup": "E_to_FR",
+      "text": "For dessert, we shared un fondant au chocolat coulant, still warm from the oven.",
+      "phrases": [
+        "un fondant au chocolat coulant"
+      ],
+      "glosses": [
+        "a molten chocolate fondant"
+      ],
+      "gloss_pairs": [
+        [
+          "un fondant au chocolat coulant",
+          "a molten chocolate fondant"
+        ]
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/fr_fondant/vanilla.wav",
+        "ours": "wavs/realworld/fr_fondant/ours.wav"
+      }
+    },
+    {
+      "id": "de_maronen",
+      "group": "Beyond Korean & Japanese",
+      "title": "Christmas market",
+      "setup": "E_to_DE",
+      "text": "The Christmas market smelled of frisch geröstete Maronen und Glühwein everywhere.",
+      "phrases": [
+        "frisch geröstete Maronen und Glühwein"
+      ],
+      "glosses": [
+        "freshly roasted chestnuts and mulled wine"
+      ],
+      "gloss_pairs": [
+        [
+          "frisch geröstete Maronen und Glühwein",
+          "freshly roasted chestnuts and mulled wine"
+        ]
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/de_maronen/vanilla.wav",
+        "ours": "wavs/realworld/de_maronen/ours.wav"
+      }
+    },
+    {
+      "id": "enfr_menu",
+      "group": "Beyond Korean & Japanese",
+      "title": "Dessert menu",
+      "setup": "E_to_FR",
+      "text": "The dessert menu's highlight is une tarte aux pommes maison, served warm.",
+      "phrases": [
+        "une tarte aux pommes maison"
+      ],
+      "glosses": [
+        "a homemade apple tart"
+      ],
+      "gloss_pairs": [
+        [
+          "une tarte aux pommes maison",
+          "a homemade apple tart"
+        ]
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/enfr_menu/vanilla.wav",
+        "ours": "wavs/realworld/enfr_menu/ours.wav"
+      }
+    },
+    {
+      "id": "de_kartoffel",
+      "group": "Beyond Korean & Japanese",
+      "title": "Lunch classic",
+      "setup": "E_to_DE",
+      "text": "The lunch classic here is Bratkartoffeln mit Speck und Zwiebeln, crispy at the edges.",
+      "phrases": [
+        "Bratkartoffeln mit Speck und Zwiebeln"
+      ],
+      "glosses": [
+        "pan-fried potatoes with bacon and onions"
+      ],
+      "gloss_pairs": [
+        [
+          "Bratkartoffeln mit Speck und Zwiebeln",
+          "pan-fried potatoes with bacon and onions"
+        ]
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/de_kartoffel/vanilla.wav",
+        "ours": "wavs/realworld/de_kartoffel/ours.wav"
+      }
+    },
+    {
+      "id": "fr_fromage",
+      "group": "Beyond Korean & Japanese",
+      "title": "Cheese course",
+      "setup": "E_to_FR",
+      "text": "The cheese course featured un plateau de fromages affinés with fig jam.",
+      "phrases": [
+        "un plateau de fromages affinés"
+      ],
+      "glosses": [
+        "a platter of aged cheeses"
+      ],
+      "gloss_pairs": [
+        [
+          "un plateau de fromages affinés",
+          "a platter of aged cheeses"
+        ]
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/fr_fromage/vanilla.wav",
+        "ours": "wavs/realworld/fr_fromage/ours.wav"
+      }
+    },
+    {
+      "id": "de_strudel",
+      "group": "Beyond Korean & Japanese",
+      "title": "Family recipe",
+      "setup": "E_to_DE",
+      "text": "Grandma's recipe calls for hausgemachter Apfelstrudel mit Vanillesoße on Sundays.",
+      "phrases": [
+        "hausgemachter Apfelstrudel mit Vanillesoße"
+      ],
+      "glosses": [
+        "homemade apple strudel with vanilla sauce"
+      ],
+      "gloss_pairs": [
+        [
+          "hausgemachter Apfelstrudel mit Vanillesoße",
+          "homemade apple strudel with vanilla sauce"
+        ]
+      ],
+      "files": {
+        "vanilla": "wavs/realworld/de_strudel/vanilla.wav",
+        "ours": "wavs/realworld/de_strudel/ours.wav"
+      }
+    }
+  ],
+  "phrase_comparison": [
+    {
+      "direction": "K_to_E",
+      "ex_id": "ex02",
+      "entry_id": "syncs_K_to_E_37",
+      "phrase_idx": 1,
+      "phrase": "practical workshops aligned with our buying committee",
+      "sentence": "지난달 우리 팀이 도입한 기업 간 영업 컨설팅사는 기대보다 훨씬 실무적이었고, 리뷰를 남길 만큼 인상이 좋았다. 첫 진단 미팅에서 a clear account-based sales playbook 으로 논의를 정리해 주니, 영업대표와 마케팅 담당자가 같은 언어로 문제를 보게 됐다. 워크숍은 practical workshops aligned with our buying committee 와 실제 고객 미팅 사례를 엮어 진행돼, 강의보다 공동 설계에 가까웠다. 특히 actionable pipeline diagnostics grounded in real CRM data 가 가장 도움이 됐는데, 막연했던 리드 품질 문제와 딜 지연 원인이 숫자로 보였다. 마지막 제안서에 담긴 a lightweight operating model for cross-functional execution 과 transparent ROI assumptions for the first six months 까지 설득력 있어, 비용은 높지만 재계약은 긍정적으로 검토 중이다."
+    },
+    {
+      "direction": "K_to_E",
+      "ex_id": "ex04",
+      "entry_id": "syncs_K_to_E_6",
+      "phrase_idx": 1,
+      "phrase": "lean household operations with zero emotional overhead",
+      "sentence": "퇴근하고 집에 오자마자 운동복을 세탁기에 넣었는데, 오늘은 minimum viable weekday morning routine 으로 내일 입을 양말이랑 머그컵까지 미리 챙겼다. 싱크대에 컵 두 개랑 접시 하나만 남겨두기 싫어서 lean household operations with zero emotional overhead 처럼 바로 치웠고, 냉장고 앞 메모에는 data driven grocery budget tracking system 의 잔액을 작게 적어놨다. 베란다 화분에 물 주는 사이 고양이는 새 택배 박스에 들어가서 weekly user research session with a very picky stakeholder 에 참여하는 표정으로 나를 봤다. 별거 아닌 집안일도 이렇게 이름을 붙이면 묘하게 게임 같고, 잠들기 전 마음이 조금 정리된다."
+    }
+  ],
+  "full_sentence": [
+    {
+      "direction": "E_to_J",
+      "entry_id": "syncs_E_to_J_23",
+      "sentence": "After the rain, I ducked into a tiny old-school cafe by the station, and the 深煎り豆をネルで落とす香り made my whole jacket smell like comfort. The owner gave me a smile that said ごゆっくりお召し上がりください, not fussy, just warm. I took the corner seat and watched steam blur the window, feeling a sort of 雨上がりの縁側で飲むほうじ茶 settle into the evening. Next time, I’m bringing a book and pretending I don’t have notifications. Honestly, it beat any fancy latte art.",
+      "phrases": [
+        "深煎り豆をネルで落とす香り",
+        "ごゆっくりお召し上がりください",
+        "雨上がりの縁側で飲むほうじ茶"
+      ],
+      "glosses": [
+        "the aroma of dark-roasted beans brewed through a flannel filter",
+        "please take your time and enjoy it",
+        "roasted green tea sipped on a veranda after the rain"
+      ]
+    },
+    {
+      "direction": "E_to_K",
+      "entry_id": "syncs_E_to_K_91",
+      "sentence": "Han’s slim novel reads like a review of everything we keep misplacing: names, rooms, the voices of the dead. The 첫눈 녹듯 사라지는 어머니의 마지막 손길 gives the opening its ache, while the 제사상에 올린 식어 가는 흰밥 한 그릇 turns grief into something almost domestic. By the final chapter, even 봄비에 젖은 벚꽃잎이 흩어진 골목 feels less symbolic than inevitable. I admired its restraint; it left me quiet, not devastated, and somehow that was worse.",
+      "phrases": [
+        "첫눈 녹듯 사라지는 어머니의 마지막 손길",
+        "제사상에 올린 식어 가는 흰밥 한 그릇",
+        "봄비에 젖은 벚꽃잎이 흩어진 골목"
+      ],
+      "glosses": [
+        "last trace of a mother’s touch fading like first snow",
+        "cooling bowl of white rice set out for the ancestors",
+        "an alley strewn with cherry petals wet from spring rain"
+      ]
+    }
+  ]
+}
